@@ -1,0 +1,41 @@
+plugins {
+    id 'application'
+    id 'java'
+    id 'jacoco'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = "codingChallenge.Main"
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.1'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    //https://github.com/webcompere/system-stubs
+    testImplementation group: 'org.mockito', name: 'mockito-inline', version: '3.12.4'
+    testImplementation group: 'uk.org.webcompere', name: 'system-stubs-jupiter', version: '2.0.2'
+}
+
+//Jacoco for code coverage
+
+test {
+    finalizedBy jacocoTestReport // generate report after code coverage test
+}
+jacocoTestReport {
+    dependsOn test // make sure that test task run before reports are run.
+}
+
+test {
+    useJUnitPlatform()
+}
